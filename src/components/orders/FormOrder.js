@@ -1,11 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { postOrders } from '../../services/orderService';
 
 export const FormOrder = () => {
+
+    const [valoresform, setValoresform] = useState({});
+    const {
+        diaRe = '', horaRe = '', medidas = '', delicado = '', peso = '', dirRe = '', ciudadRe = '',
+         nombreEmisor = '', tipoIdEmisor = '', idEmisor = '', dirEn = '', ciudadEn = '', nombreReceptor = '',
+         tipoIdReceptor = '',  idReceptor = '' } = valoresform;
+
+    const handleOnChange = ({ target }) => {
+        const { name, value } = target;
+        setValoresform({ ...valoresform, [name]: value });
+        console.log(valoresform);
+    }
+
+    const handleOnSubmit = async (e) => {
+        e.preventDefault();
+        const orderModel = {
+
+            diaRe, horaRe, medidas, delicado, peso,
+            dirRe, ciudadRe, nombreEmisor, tipoIdEmisor, idEmisor, dirEn,
+            ciudadEn, nombreReceptor, tipoIdReceptor, idReceptor
+        }
+        try {
+            const { data } = await postOrders(orderModel);
+            console.log(data);
+        } catch (error) {
+            console.log("error al crear la solicitud");
+        }
+    }
+
+
     return (
         <div className='container-fluid'>
             <div className='row'>
                 <div className='col'>
-                    <form className='form' onSubmit={'hacer algo al enviar'}>
+                    <form className='form'
+                        onSubmit={(e) =>
+                            handleOnSubmit(e)
+                        }>
                         <div className='row'>
                             <h2>SOLICITAR RECOGIDA DE PAQUETES</h2>
                         </div>
@@ -13,31 +47,52 @@ export const FormOrder = () => {
                             <div className='col'>
                                 <div className='mb-3'>
                                     <label className='form-label' for="diarecogidaid">Día de recogida</label>
-                                    <input type="text" name="dia" value="" id="diarecogidaid" />
+                                    <input
+                                        required
+                                        value={diaRe}
+                                        onChange={(e) => {
+                                            handleOnChange(e);
+                                        }} type="text" name="diaRe" id="diarecogidaid" />
                                 </div>
                             </div>
                             <div className='col'>
                                 <div className='mb-3'>
                                     <label className='form-label' for="horarecogidaid">Hora de recogida</label>
-                                    <input type="text" name="hora" value="" id="horarecogidaid" />
+                                    <input required
+                                        value={horaRe}
+                                        onChange={(e) => {
+                                            handleOnChange(e);
+                                        }} type="text" name="horaRe" id="horarecogidaid" />
                                 </div>
                             </div>
                             <div className='col'>
                                 <div className='mb-3'>
                                     <label className='form-label' for="medidasid">Medidas "ancho,alto,largo" (cm)</label>
-                                    <input type="text" name="medidas" value="" id="medidasid" />
+                                    <input required
+                                        value={medidas}
+                                        onChange={(e) => {
+                                            handleOnChange(e);
+                                        }} type="text" name="medidas" id="medidasid" />
                                 </div>
                             </div>
                             <div className='col'>
                                 <div className='mb-1'>
                                     <label className='form-label' for="delicadoid">¿Delicado?</label>
-                                    <input type="text" name="delicado" value="" id="delicadoid" />
+                                    <input required
+                                        value={delicado}
+                                        onChange={(e) => {
+                                            handleOnChange(e);
+                                        }} type="text" name="delicado" id="delicadoid" />
                                 </div>
                             </div>
                             <div className='col'>
                                 <div className='mb-2'>
                                     <label className='form-label' for="pesoid">Peso en KG</label>
-                                    <input type="text" name="peso" value="" id="pesoid" />
+                                    <input required
+                                        value={peso}
+                                        onChange={(e) => {
+                                            handleOnChange(e);
+                                        }} type="text" name="peso" id="pesoid" />
                                 </div>
                             </div>
                         </div>
@@ -45,31 +100,51 @@ export const FormOrder = () => {
                             <div className='col'>
                                 <div className='mb-3'>
                                     <label className='form-label' for="direccionrecogidaid">Dirección de recogida</label>
-                                    <input type="text" name="direccionrecogida" value="" id="direccionrecogidaid" />
+                                    <input required
+                                        value={dirRe}
+                                        onChange={(e) => {
+                                            handleOnChange(e);
+                                        }} type="text" name="dirRe" id="direccionrecogidaid" />
                                 </div>
                             </div>
                             <div className='col'>
                                 <div className='mb-2'>
                                     <label className='form-label' for="ciudadrecogidaid">Ciudad de recogida</label>
-                                    <input type="text" name="ciudadrecogida" value="" id="ciudadrecogidaid" />
+                                    <input required
+                                        value={ciudadRe}
+                                        onChange={(e) => {
+                                            handleOnChange(e);
+                                        }} type="text" name="ciudadRe" id="ciudadrecogidaid" />
                                 </div>
                             </div>
                             <div className='col'>
                                 <div className='mb-3'>
                                     <label className='form-label' for="nombreemisorid">Nombre de quien envía</label>
-                                    <input type="text" name="nombreemisor" value="" id="nombreemisorid" />
+                                    <input required
+                                        value={nombreEmisor}
+                                        onChange={(e) => {
+                                            handleOnChange(e);
+                                        }} type="text" name="nombreEmisor" id="nombreemisorid" />
                                 </div>
                             </div>
                             <div className='col'>
                                 <div className='mb-2'>
                                     <label className='form-label' for="emisortipoidid">Tipo Documento</label>
-                                    <input type="text" name="emisortipoid" value="" id="emisortipoidid" />
+                                    <input required
+                                        value={tipoIdEmisor}
+                                        onChange={(e) => {
+                                            handleOnChange(e);
+                                        }} type="text" name="tipoIdEmisor" id="emisortipoidid" />
                                 </div>
                             </div>
                             <div className='col'>
                                 <div className='mb-2'>
                                     <label className='form-label' for="emisoridid">Número de Identificación</label>
-                                    <input type="text" name="emisorid" value="" id="emisoridid" />
+                                    <input required
+                                        value={idEmisor}
+                                        onChange={(e) => {
+                                            handleOnChange(e);
+                                        }} type="text" name="idEmisor" id="emisoridid" />
                                 </div>
                             </div>
                         </div>
@@ -77,31 +152,51 @@ export const FormOrder = () => {
                             <div className='col'>
                                 <div className='mb-3'>
                                     <label className='form-label' for="direccionentregaid">Dirección de entrega</label>
-                                    <input type="text" name="direccionentrega" value="" id="direccionentregaid" />
+                                    <input required
+                                        value={dirEn}
+                                        onChange={(e) => {
+                                            handleOnChange(e);
+                                        }} type="text" name="dirEn" id="direccionentregaid" />
                                 </div>
                             </div>
                             <div className='col'>
                                 <div className='mb-2'>
                                     <label className='form-label' for="ciudadentregaid">Ciudad de entrega</label>
-                                    <input type="text" name="ciudadentrega" value="" id="ciudadentregaid" />
+                                    <input required
+                                        value={ciudadEn}
+                                        onChange={(e) => {
+                                            handleOnChange(e);
+                                        }} type="text" name="ciudadEn" id="ciudadentregaid" />
                                 </div>
                             </div>
                             <div className='col'>
                                 <div className='mb-3'>
                                     <label className='form-label' for="nombrereceptorid">Nombre de quien recibe</label>
-                                    <input type="text" name="nombrereceptor" value="" id="nombrereceptorid" />
+                                    <input required
+                                        value={nombreReceptor}
+                                        onChange={(e) => {
+                                            handleOnChange(e);
+                                        }} type="text" name="nombreReceptor" id="nombrereceptorid" />
                                 </div>
                             </div>
                             <div className='col'>
                                 <div className='mb-2'>
                                     <label className='form-label' for="receptortipoidid">Tipo Documento</label>
-                                    <input type="text" name="peso" value="" id="receptortipoidid" />
+                                    <input required
+                                        value={tipoIdReceptor}
+                                        onChange={(e) => {
+                                            handleOnChange(e);
+                                        }} type="text" name="tipoIdReceptor" id="receptortipoidid" />
                                 </div>
                             </div>
                             <div className='col'>
                                 <div className='mb-2'>
                                     <label className='form-label' for="receptoridid">Número de Identificación</label>
-                                    <input type="text" name="receptorid" value="" id="receptoridid" />
+                                    <input required
+                                        value={idReceptor}
+                                        onChange={(e) => {
+                                            handleOnChange(e);
+                                        }} type="text" name="idReceptor" id="receptoridid" />
                                 </div>
                             </div>
                         </div>
