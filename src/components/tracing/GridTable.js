@@ -20,16 +20,16 @@ export const GridTable = () => {
 
   return (
     <div className='container' >
-      <div className="container">
+      <div className="p">
         <div className="row justify-content-md-center">
-          <form className='form'
+          <form className='form p'
           onSubmit={(e) =>{
             mostrarOrder(e)
            }}>
             <div className="col col-lg-2">
               <label className='form-label' for="orderId">ID de seguimiento:</label>
             </div>
-            <div class="col-md-auto">
+            <div className="col-md-auto">
               <input
                 required
                 value={orderId}
@@ -41,13 +41,13 @@ export const GridTable = () => {
                 className='form-control'
                 id="orderId" />
             </div>
-            <div class="col col-lg-2">
-              <button type="onSubmit" className='btn btn-primary' >Buscar</button>
+            <div className="col col-lg-2 p">
+              <button type="onSubmit" className='btn btn-primary ' >Buscar</button>
             </div>
           </form>
         </div>
       </div>
-      <table class="table">
+      <table className="table">
         <thead>
           <tr>
             <th scope="col">ID seguimiento</th>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { postOrders } from '../../services/orderService';
+import Swal from 'sweetalert2';
 
 export const FormOrder = () => {
 
@@ -18,7 +19,6 @@ export const FormOrder = () => {
     const handleOnSubmit = async (e) => {
         e.preventDefault();
         const orderModel = {
-
             diaRe, horaRe, medidas, delicado, peso,
             dirRe, ciudadRe, nombreEmisor, tipoIdEmisor, idEmisor, dirEn,
             ciudadEn, nombreReceptor, tipoIdReceptor, idReceptor
@@ -26,15 +26,20 @@ export const FormOrder = () => {
         try {
             const { data } = await postOrders(orderModel);
             console.log(data);
+            Swal.fire({
+                allowOutsideClick: false, title: 'Se ha creado exitosamente' , text: `Código de seguimiento: ${data._id}`, timer: 8000//milisegundos
+            });
         } catch (error) {
             console.log("error al crear la solicitud");
+            Swal.fire('Error', 'hubo un error', 'error');
+            Swal.close();
         }
     }
 
 
     return (
         <div className='container-fluid'>
-            <div className='row'>
+            <div className='row p'>
                 <div className='col'>
                     <form className='form'
                         onSubmit={(e) =>
